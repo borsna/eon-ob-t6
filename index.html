@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="css/dice-1.0.min.css">
+    <link rel="stylesheet" href="css/eon-ob-t6.css">
+    <link rel="icon" type="image/png" href="images/favicon.png"/>
+
+    <title>EON-OB-T6</title>
+  </head>
+  <body>
+    <div id="app">
+        <div class="container">
+            <div class="row mt-1 mb-2">
+                <div class="col-6">
+                    <div class="input-group input-group-lg">
+                        <input type="number" class="form-control" v-model="settings.numberOfDices">
+                        <div class="input-group-append">
+                          <button class="btn btn-success" type="button" v-on:click="roll"><i class="fas fa-dice"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <h1 class="text-success text-right font-weight-bold" v-if="diceTotal">{{ diceTotal }}</h1>
+                </div>
+            </div>
+            <div class="row mb-2 pl-3 pr-4 justify-content-between">
+                <div class="col-6">
+                    <div class="row mt-1 mb-2">
+                        <div class="btn-group btn-group-lg" role="group" style="min-width:70%">
+                            <button type="button" v-bind:class="['btn', settings.attack=='high' ? 'btn-success' : 'btn-secondary']" v-on:click="settings.attack='high'"> Högt</button>
+                            <button type="button" v-bind:class="['btn', settings.attack=='normal' ? 'btn-success' : 'btn-secondary']" v-on:click="settings.attack='normal'">Normalt</button>
+                            <button type="button" v-bind:class="['btn', settings.attack=='low' ? 'btn-success' : 'btn-secondary']" v-on:click="settings.attack='low'">Lågt</button>
+                        </div>
+                    </div>
+                    <div class="row mt-1 mb-2">
+                        <div class="btn-group btn-group-lg" role="group" style="min-width:70%">
+                            <button type="button" v-bind:class="['btn', settings.attackType=='slash' ? 'btn-success' : 'btn-secondary']" v-on:click="settings.attackType='slash'">Hugg</button>
+                            <button type="button" v-bind:class="['btn', settings.attackType=='stab' ? 'btn-success' : 'btn-secondary']" v-on:click="settings.attackType='stab'">Stick</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="coll-6">
+                    <div class="row mt-1 mb-2" style="height:90%;">
+                        <div class="btn-group btn-group-lg ml-1" role="group" style="height:100%;min-width:40%;">
+                            <button type="button" class="btn btn-danger" style="min-width:5em" v-on:click="rollAttack"><i class="fas fa-child" style="font-size: 4rem;"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-for="row in diceResult" class="card mb-2" style="font-size: 3em;">
+                <div class="card-body">
+                    <span v-for="d in row" :class="'ml-1 mb-1 dice dice-' + d"></span>
+                </div>
+            </div>
+
+            <div class="hitmap" v-if="action=='attack'">
+                <div v-bind:class="'hit-'+attackHit"></div>
+            </div>
+        </div>
+    </div>
+    <script src="js/vue.2.6.12.js"></script>
+    <script src="js/eon-ob-t6.js"></script>
+</body>
+</html>
